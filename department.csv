@@ -1,0 +1,4 @@
+dept_id,dept_name,dept_code,hod,parent_dept_id,description,status,dept_coordinator
+1,retail,a101,rahul,NULL,retail department,1,pranay
+2,technical,a102,ajay,NULL,teachnical department,1,vishesh
+3,sales,a103,rajesh,NULL,sales deapartment,1,gopala
