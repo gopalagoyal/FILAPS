@@ -209,7 +209,7 @@
 
 		$('#submit').click(function(e) {
 			e.preventDefault();
-			var blankFields=[];
+			var blankFields=[];	//Variable to store Blank element location
 			$("input[type=file]").parse({
 				config: {
 					delimiter: ",",
@@ -218,31 +218,29 @@
 					skipEmptyLines: false,
 					complete: function(result, file) {
 						console.log("This file done:", file);
-
                 //......................................................        
-                //console.log(result.data[0]["Size"]); //Printing the JSON stringified data
-                //console.log(emp);
+               // console.log(result.data[0]["Corp_ID"]); //Printing the JSON stringified data
                 //THIS CODE BELOW HAS TO BE USED FOR VALIDATION ON EMPLOYEE CSV FILE
                 for (var i = 0; i < result.data.length; i++) {
                 	if (result.data[i]["Corp_ID"] == "") {
                 		blankFields.push(i+2);
+                		result.data.splice(i, 1);
                 	}
                 }
                 for(var i = 0; i <= result.data.length; i++) {
                 	if(result.data.length==0){
-                		$("#error").append("Empty File!")
+                		$("#error").html("Empty File!")
                 	}
-                	else if(result.data[i]["Corp_ID"] == "") {
+                /* if(result.data[i]["Corp_ID"] == "") {
                 		result.data.splice(i, 1);	
-                	}
+                	}*/
                 }
                 if(blankFields.length>0){
-                	$("#error").append("Caught blank element at row " + blankFields + " in the excel sheet");
+                	$("#error").html("Caught blank element at row " + blankFields + " in the excel sheet");
                 }
-                var emp = (JSON.stringify(result.data, null, 4));
+                var emp = (JSON.stringify(result.data, null, 4)); //Variable to store parsed CSV JSON stringified data
                 console.log(emp);
                 console.log("Caught blank element at " + blankFields + " rows in the excel sheet");
-
                 //......................................................   
                 //AJAX QUERY TO POST DATA
                /* var settings = {
@@ -257,14 +255,12 @@
                     "processData": false,
                     "data": emp
                 }
-
                 $.ajax(settings).done(function(response) {
                     console.log(response);
                 });*/
             }
         }
     });
-//return false;
 });
 
 </script>
